@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import {v4 as uuid} from "uuid";
 
-function QuestionForm(props) {
+function QuestionForm({ handleFormSubmit }) {
   const [formData, setFormData] = useState({
     prompt: "",
     answer1: "",
@@ -19,7 +20,21 @@ function QuestionForm(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+    // console.log(formData);
+    const newQuestion = {
+      "id": uuid(),
+      "prompt": formData.prompt,
+      "answers": [
+        formData.answer1,
+        formData.answer2,
+        formData.answer3,
+        formData.answer4
+      ],
+      "correctIndex": formData.correctIndex
+    };
+
+    handleFormSubmit(newQuestion);
+    event.reset();
   }
 
   return (
